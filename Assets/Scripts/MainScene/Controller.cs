@@ -14,6 +14,12 @@ public class Controller : MonoBehaviour {
 
 	public bool useLeapMotion;
 
+	public GameObject clickecPosObject;
+	public GameObject sphereObj;
+
+	public GameObject dragPosObject;
+	public GameObject sphereObj2;
+
 	// Use this for initialization
 	void Start () {
 		this.isClick=false;
@@ -21,17 +27,34 @@ public class Controller : MonoBehaviour {
 	}
 
 	private void MoveLeapMotion(){
+		if(this.dragPosObject!=null)Destroy(this.dragPosObject.gameObject);
 		Debug.Log(this.finger.active);
 		if(this.finger.active==false){
 			this.preBoneActive=false;
-			this.prePosition=this.finger.transform.position;
+			if(this.clickecPosObject!=null){
+				Destroy(this.clickecPosObject.gameObject);
+			}
 			return;
 		}else{
 			if(this.preBoneActive==true){
-				Debug.Log("move:"+(finger.transform.position-prePosition)*200);
-				this.player.GetComponent<Rigidbody>().AddForce((finger.transform.position-prePosition)*200);
+				// アクティブ中
+				Debug.Log("move:"+(finger.transform.localPosition-prePosition)*40);
+				this.player.GetComponent<Rigidbody>().AddForce((finger.transform.localPosition-prePosition).normalized*40);
+
+				//this.dragPosObject= Instantiate(this.sphereObj2.gameObject,this.finger.transform);
+				//this.dragPosObject.transform.parent=null;
+
+				// アクティブになった瞬間
+				this.prePosition=this.finger.transform.localPosition;
+				//this.clickecPosObject=Instantiate(this.sphereObj.gameObject,this.finger.transform);
+				//this.clickecPosObject.transform.parent=null;
+				this.preBoneActive=true;
+			}else{// アクティブになった瞬間
+				this.prePosition=this.finger.transform.localPosition;
+				//this.clickecPosObject=Instantiate(this.sphereObj.gameObject,this.finger.transform);
+				//this.clickecPosObject.transform.parent=null;
+				this.preBoneActive=true;
 			}
-			this.preBoneActive=true;
 		}
 	}
 
