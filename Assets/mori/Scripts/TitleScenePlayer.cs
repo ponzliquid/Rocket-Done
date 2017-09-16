@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleScenePlayer : MonoBehaviour {
+public class TitleScenePlayer : MonoBehaviour
+{
+    public List<GameObject> startToSelectFalse = new List<GameObject>();
+    public List<GameObject> startToSelectTrue = new List<GameObject>();
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    public void OnClickStart(){
+        foreach (GameObject gb in startToSelectFalse){
+            gb.SetActive(false);
+        }
+
+        foreach(GameObject gb in startToSelectTrue){
+            gb.SetActive(true);
+        }
+    }
 }
+
+
