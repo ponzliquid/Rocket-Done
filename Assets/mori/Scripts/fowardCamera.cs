@@ -9,7 +9,7 @@ public class fowardCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		mcamera.transform.localPosition = Vector3.MoveTowards(mcamera.transform.localPosition,player.transform.localPosition, 1.0f * Time.deltaTime);
+		//mcamera.transform.localPosition = Vector3.MoveTowards(mcamera.transform.localPosition,player.transform.localPosition, 1.0f * Time.deltaTime);
 
 	}
 }

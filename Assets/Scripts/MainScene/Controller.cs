@@ -12,33 +12,30 @@ public class Controller : MonoBehaviour {
 	public Vector3 prePosition;
 	public bool preBoneActive;
 
+	public bool useLeapMotion;
+
 	// Use this for initialization
 	void Start () {
 		this.isClick=false;
 		this.preBoneActive=false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	private void MoveLeapMotion(){
 		Debug.Log(this.finger.active);
 		if(this.finger.active==false){
 			this.preBoneActive=false;
+			this.prePosition=this.finger.transform.position;
 			return;
 		}else{
 			if(this.preBoneActive==true){
 				Debug.Log("move:"+(finger.transform.position-prePosition)*200);
 				this.player.GetComponent<Rigidbody>().AddForce((finger.transform.position-prePosition)*200);
 			}
-
-			this.prePosition=this.finger.transform.position;
 			this.preBoneActive=true;
 		}
-		
+	}
 
-		
-		
-		
-
+	private void MoveMouse(){
 		if(Input.GetMouseButtonDown(0)){
 			this.clickedPos=Input.mousePosition;
 			this.isClick=true;
@@ -55,6 +52,23 @@ public class Controller : MonoBehaviour {
 
 			this.player.GetComponent<Rigidbody>().AddForce((clickedPos-releasePos)*10);
 		}
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if(this.useLeapMotion){
+			this.MoveLeapMotion();	
+		}else{
+			this.MoveMouse();
+		}
+		
+		
+
+		
+		
+		
+
+		
 
 	}
 }
