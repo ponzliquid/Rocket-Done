@@ -14,13 +14,15 @@ public class Planet : MonoBehaviour {
 	public GameObject gravityField;
 	private GameObject gravityFieldInstance;
 
+	private bool isGravityArea;
+
 	// Use this for initialization
 	void Start () {
 		//this.gravityField=Resources.Load("Prefabs/GravityField") as GameObject;
 		this.gravityFieldInstance= Instantiate(this.gravityField.gameObject,this.transform);
 		this.gravityFieldInstance.transform.localScale=new Vector3(this.forceAbleDistance*2,this.forceAbleDistance*2,1)/this.transform.localScale.x;
 		this.gravityFieldInstance.transform.parent=this.transform;
-		this.gravityFieldInstance.transform.localPosition=new Vector3(0,0,10);
+		this.gravityFieldInstance.transform.localPosition=new Vector3(0,0,1);
 	}
 	
 	void FixedUpdate () {
@@ -28,15 +30,21 @@ public class Planet : MonoBehaviour {
 		this.planets.AddRange(new List<GameObject>(new List<GameObject>(GameObject.FindGameObjectsWithTag("Goal"))));
 		//AddRange(new List<GameObject>(GameObject.FindGameObjectsWithTag("Goal")));
 
+		this.isGravityArea=false;
 		foreach(GameObject planet  in this.planets){
 			// 自分自身は計算の対象外
-			if(planet==this.gameObject)continue;
-
+			if(planet==this.gameObject){
+				continue;
+			}
+			
 			// 星に向かう向きの取得
 			Vector3 direction = planet.transform.position - transform.position;
 			// 星までの距離の２乗を取得
 			float distance = direction.magnitude;
-			if(distance>planet.GetComponent<Planet>().forceAbleDistance)continue;
+			if(distance>planet.GetComponent<Planet>().forceAbleDistance){
+				continue;
+			}
+			this.isGravityArea=true;
 
 			distance *= distance;
 			// 万有引力計算
@@ -45,6 +53,11 @@ public class Planet : MonoBehaviour {
 			// 力を与える
 			// Debug.Log(distance);
 			this.GetComponent<Rigidbody>().AddForce(gravity * direction.normalized, ForceMode.Force);
+		}
+
+		// 重力波の影響を受けていなければ，減速させる
+		if(this.isGravityArea==false){
+			this.GetComponent<Rigidbody>().velocity*=0.98f;
 		}
 	}
 

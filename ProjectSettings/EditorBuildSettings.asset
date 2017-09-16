@@ -4,4 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/mori/Scenes/titleScene.unity
+    guid: 3616079cab09a41219515094c1e6261a
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: aa7e065f10e05448fa95850d7716dfcc
+  - enabled: 1
+    path: Assets/mori/Scenes/resultScene.unity
+    guid: 30b123281d1b2412a83e5e64a77d9c22

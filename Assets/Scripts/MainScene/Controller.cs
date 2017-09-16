@@ -13,6 +13,7 @@ public class Controller : MonoBehaviour {
 	public bool preBoneActive;
 
 	public bool useLeapMotion;
+	public float leapSpeed;
 
 	public GameObject clickecPosObject;
 	public GameObject sphereObj;
@@ -39,7 +40,7 @@ public class Controller : MonoBehaviour {
 			if(this.preBoneActive==true){
 				// アクティブ中
 				Debug.Log("move:"+(finger.transform.localPosition-prePosition)*40);
-				this.player.GetComponent<Rigidbody>().AddForce((finger.transform.localPosition-prePosition).normalized*40);
+				this.player.GetComponent<Rigidbody>().AddForce((finger.transform.localPosition-prePosition).normalized*this.leapSpeed);
 
 				//this.dragPosObject= Instantiate(this.sphereObj2.gameObject,this.finger.transform);
 				//this.dragPosObject.transform.parent=null;
@@ -80,14 +81,14 @@ public class Controller : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(this.useLeapMotion){
+		/*if(this.useLeapMotion){
 			this.MoveLeapMotion();	
 		}else{
 			this.MoveMouse();
-		}
+		}*/
 		
-		
-
+		this.MoveLeapMotion();
+		this.MoveMouse();
 		
 		
 		
