@@ -67,13 +67,14 @@ public class Controller : MonoBehaviour {
 
 		if(Input.GetMouseButton(0)){
 			this.player.GetComponent<Rigidbody>().velocity=Vector3.zero;
-			this.player.GetComponent<Rigidbody>().AddForce((clickedPos-Input.mousePosition)*-10);
+			this.player.GetComponent<Rigidbody>().AddForce((clickedPos-Input.mousePosition)*-30);
 		}
 
 		if(Input.GetMouseButtonUp(0)){
 			this.releasePos=Input.mousePosition;
+			this.isClick=false;
 
-			this.player.GetComponent<Rigidbody>().AddForce((clickedPos-releasePos)*10);
+			//this.player.GetComponent<Rigidbody>().AddForce((clickedPos-releasePos)*10);
 		}
 	}
 	

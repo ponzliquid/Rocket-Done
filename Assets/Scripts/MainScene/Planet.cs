@@ -8,14 +8,25 @@ public class Planet : MonoBehaviour {
 	public float coefficient;	// 万有引力係数
 	public float forceAbleDistance; // 力が及ぶ範囲
 
-	public GameObject[] planets;
+	//public GameObject[] planets;
+	public List<GameObject> planets;
+
+	public GameObject gravityField;
+	private GameObject gravityFieldInstance;
 
 	// Use this for initialization
 	void Start () {
+		//this.gravityField=Resources.Load("Prefabs/GravityField") as GameObject;
+		this.gravityFieldInstance= Instantiate(this.gravityField.gameObject,this.transform);
+		this.gravityFieldInstance.transform.localScale=new Vector3(this.forceAbleDistance*2,this.forceAbleDistance*2,1)/this.transform.localScale.x;
+		this.gravityFieldInstance.transform.parent=this.transform;
+		this.gravityFieldInstance.transform.localPosition=new Vector3(0,0,10);
 	}
 	
 	void FixedUpdate () {
-		this.planets=GameObject.FindGameObjectsWithTag("Planet");
+		this.planets=new List<GameObject>(GameObject.FindGameObjectsWithTag("Planet"));
+		this.planets.AddRange(new List<GameObject>(new List<GameObject>(GameObject.FindGameObjectsWithTag("Goal"))));
+		//AddRange(new List<GameObject>(GameObject.FindGameObjectsWithTag("Goal")));
 
 		foreach(GameObject planet  in this.planets){
 			// 自分自身は計算の対象外
